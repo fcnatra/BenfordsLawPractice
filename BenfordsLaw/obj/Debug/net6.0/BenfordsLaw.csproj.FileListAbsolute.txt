@@ -1,0 +1,16 @@
+C:\Proyectos\_Proof of Concepts\BenfordsLaw\BenfordsLaw\bin\Debug\net6.0\DataSource\conjunto datos.csv
+C:\Proyectos\_Proof of Concepts\BenfordsLaw\BenfordsLaw\bin\Debug\net6.0\BenfordsLaw.exe
+C:\Proyectos\_Proof of Concepts\BenfordsLaw\BenfordsLaw\bin\Debug\net6.0\BenfordsLaw.deps.json
+C:\Proyectos\_Proof of Concepts\BenfordsLaw\BenfordsLaw\bin\Debug\net6.0\BenfordsLaw.runtimeconfig.json
+C:\Proyectos\_Proof of Concepts\BenfordsLaw\BenfordsLaw\bin\Debug\net6.0\BenfordsLaw.dll
+C:\Proyectos\_Proof of Concepts\BenfordsLaw\BenfordsLaw\bin\Debug\net6.0\BenfordsLaw.pdb
+C:\Proyectos\_Proof of Concepts\BenfordsLaw\BenfordsLaw\obj\Debug\net6.0\BenfordsLaw.csproj.AssemblyReference.cache
+C:\Proyectos\_Proof of Concepts\BenfordsLaw\BenfordsLaw\obj\Debug\net6.0\BenfordsLaw.GeneratedMSBuildEditorConfig.editorconfig
+C:\Proyectos\_Proof of Concepts\BenfordsLaw\BenfordsLaw\obj\Debug\net6.0\BenfordsLaw.AssemblyInfoInputs.cache
+C:\Proyectos\_Proof of Concepts\BenfordsLaw\BenfordsLaw\obj\Debug\net6.0\BenfordsLaw.AssemblyInfo.cs
+C:\Proyectos\_Proof of Concepts\BenfordsLaw\BenfordsLaw\obj\Debug\net6.0\BenfordsLaw.csproj.CoreCompileInputs.cache
+C:\Proyectos\_Proof of Concepts\BenfordsLaw\BenfordsLaw\obj\Debug\net6.0\BenfordsLaw.dll
+C:\Proyectos\_Proof of Concepts\BenfordsLaw\BenfordsLaw\obj\Debug\net6.0\refint\BenfordsLaw.dll
+C:\Proyectos\_Proof of Concepts\BenfordsLaw\BenfordsLaw\obj\Debug\net6.0\BenfordsLaw.pdb
+C:\Proyectos\_Proof of Concepts\BenfordsLaw\BenfordsLaw\obj\Debug\net6.0\BenfordsLaw.genruntimeconfig.cache
+C:\Proyectos\_Proof of Concepts\BenfordsLaw\BenfordsLaw\obj\Debug\net6.0\ref\BenfordsLaw.dll

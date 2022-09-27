@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "uQaSGjg0TwJN7BgwXR54c2M9hYCHKmJo1p/rGembax9FYGX2p+WI7Ew2CLvc3D+Bxmypayd5MEMMQ8P2u3DxNQ==",
+  "success": true,
+  "projectFilePath": "C:\\Proyectos\\_Proof of Concepts\\BenfordsLaw\\BenfordsLaw\\BenfordsLaw.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1803",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "You are running the 'restore' operation with an 'HTTP' source, 'http://nugetserver.ekasa.local/nuget'. Non-HTTPS access will be removed in a future version. Consider migrating to an 'HTTPS' source."
+    }
+  ]
+}
