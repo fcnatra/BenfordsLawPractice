@@ -30,13 +30,22 @@
                     CountryCode = fields[1].ToUpper(),
                     IndicatorName = fields[2].ToUpper(),
                     IndicatorCode = fields[3].ToUpper(),
-                    BirthRate = double.Parse(fields[year[1960]])
+                    BirthRate = TryGetField_OrZero(fields, year[2000])//double.Parse(fields[year[1961]])
                 });
             }
 
             var numbers = dataInFile.Select(x => x.BirthRate);
 
             return numbers.ToList();
+        }
+
+        private static double TryGetField_OrZero(string[] fields, int fieldIndex)
+        {
+            double result = 0;
+            if (fields.Length > fieldIndex)
+                double.TryParse(fields[fieldIndex], out result);
+
+            return result;
         }
 
         private static bool NoDataFields(string[] fields) => fields.Length < 5;
@@ -62,6 +71,9 @@
             public string? CountryCode;
             public string? IndicatorName;
             public string? IndicatorCode;
+            /// <summary>
+            /// FROM 1960 TO 2021
+            /// </summary>
             public double BirthRate;
         };
     }
