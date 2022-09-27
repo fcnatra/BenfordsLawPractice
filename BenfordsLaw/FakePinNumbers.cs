@@ -13,7 +13,7 @@
             var numbers = new List<double>();
             foreach (string line in linesInFile)
             {
-                if (IsTheFirstLine(line) || string.IsNullOrEmpty(line))
+                if (MustSkipLine(line))
                     continue;
 
                 numbers.Add(double.Parse(line));
@@ -22,6 +22,6 @@
             return numbers;
         }
 
-        private static bool IsTheFirstLine(string line) => line.StartsWith("PIN");
+        private static bool MustSkipLine(string line) => line.StartsWith("PIN") || string.IsNullOrEmpty(line);
     }
 }

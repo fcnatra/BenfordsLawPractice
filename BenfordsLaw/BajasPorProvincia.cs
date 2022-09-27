@@ -13,7 +13,7 @@
             var dataInFile = new List<Baja>();
             foreach (string line in linesInFile)
             {
-                if (IsTheFirstLine(line) || string.IsNullOrEmpty(line))
+                if (MustSkipLine(line))
                     continue;
 
                 var fields = line.Split(";");
@@ -34,7 +34,7 @@
             return numbers.ToList();
         }
 
-        private static bool IsTheFirstLine(string line) => line.EndsWith("Total");
+        private static bool MustSkipLine(string line) => line.StartsWith("\"Data Source") || line.StartsWith("\"Last Updated") || string.IsNullOrEmpty(line);
 
         private class Baja
         {

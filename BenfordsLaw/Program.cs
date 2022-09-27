@@ -16,7 +16,8 @@ Console.WriteLine(" 9   4,6 % ");
 Console.WriteLine("\nDatasource analysis result");
 
 //List<double> numbers = BajasPorProvincia.ReadNumbers();
-List<double> numbers = FakePinNumbers.ReadNumbers();
+//List<double> numbers = FakePinNumbers.ReadNumbers();
+List<double> numbers = BirthRate.ReadNumbers();
 
 List<char>? firstDigitInNumbers = numbers.Select(x => x.ToString()[0]).ToList();
 
