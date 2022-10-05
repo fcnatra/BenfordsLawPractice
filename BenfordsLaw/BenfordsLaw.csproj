@@ -8,13 +8,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="DataSource\BirthRatePerMil.Data.WorldBank.csv">
+    <None Update="DataSourceFiles\BirthRatePerMil.Data.WorldBank.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="DataSource\INE Bajas por Provincia.csv">
+    <None Update="DataSourceFiles\INE Bajas por Provincia.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="DataSource\FAKE PinNumbers.csv">
+    <None Update="DataSourceFiles\FAKE PinNumbers.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DataSourceFiles\LiveMetrics.produccionanualacorganizacion.datos.gob.es.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DataSourceFiles\Mock Name and Age.mockaroo.com.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

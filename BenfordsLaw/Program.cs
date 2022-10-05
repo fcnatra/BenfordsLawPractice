@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using BenfordsLaw;
+
+using BenfordsLaw.DataSourceReaders;
 
 Console.WriteLine("Benford's Law");
 Console.WriteLine(" 1  30,1 %");
@@ -17,7 +18,9 @@ Console.WriteLine("\nDatasource analysis result");
 
 //List<double> numbers = BajasPorProvincia.ReadNumbers();
 //List<double> numbers = FakePinNumbers.ReadNumbers();
-List<double> numbers = BirthRate.ReadNumbers();
+//List<double> numbers = BirthRate.ReadNumbers();
+//List<double> numbers = LiveMetrics.ReadNumbers();
+List<double> numbers = MockNameAndAge.ReadNumbers();
 
 List<char>? firstDigitInNumbers = numbers.Select(x => x.ToString()[0]).ToList();
 
