@@ -1,11 +1,11 @@
 ﻿namespace BenfordsLaw.DataSourceReaders
 {
-    public class LiveMetrics
+    public class LiveMetrics : DataSourceReaderBase, IDataSourceReader
     {
-        public static List<double> ReadNumbers()
+        public List<double> ReadNumbers()
         {
             Console.WriteLine("Datos.Gob.Es - LiveMetrics");
-            var reader = new StreamReader(".\\DataSourceFiles\\LiveMetrics.produccionanualacorganizacion.datos.gob.es.csv");
+            var reader = new StreamReader($"{base.SourceFolder}LiveMetrics.produccionanualacorganizacion.datos.gob.es.csv");
 
             string fileContent = reader.ReadToEnd();
             string[] linesInFile = fileContent.Split("\r\n");
@@ -37,10 +37,10 @@
             return numbers.ToList();
         }
 
-        private static bool NoDataFields(string[] fields) => fields.Length < 5
+        private bool NoDataFields(string[] fields) => fields.Length < 5
             || string.IsNullOrEmpty(string.Join("",fields));
 
-        private static bool MustSkipLine(string line) => string.IsNullOrEmpty(line)
+        private bool MustSkipLine(string line) => string.IsNullOrEmpty(line)
             || (line[0] < '0' || line[0] > '9');
 
         private class LiveMetric

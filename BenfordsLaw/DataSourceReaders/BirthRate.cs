@@ -1,11 +1,11 @@
 ﻿namespace BenfordsLaw.DataSourceReaders
 {
-    public class BirthRate
+    public class BirthRate : DataSourceReaderBase, IDataSourceReader
     {
-        public static List<double> ReadNumbers()
+        public List<double> ReadNumbers()
         {
             Console.WriteLine("Data WorldBank - Birth rate per mil");
-            var reader = new StreamReader(".\\DataSourceFiles\\BirthRatePerMil.Data.WorldBank.csv");
+            var reader = new StreamReader($"{base.SourceFolder}BirthRatePerMil.Data.WorldBank.csv");
 
             string fileContent = reader.ReadToEnd();
             string[] linesInFile = fileContent.Split("\r\n");
@@ -39,7 +39,7 @@
             return numbers.ToList();
         }
 
-        private static double TryGetField_OrZero(string[] fields, int fieldIndex)
+        private double TryGetField_OrZero(string[] fields, int fieldIndex)
         {
             double result = 0;
             if (fields.Length > fieldIndex)
@@ -48,9 +48,9 @@
             return result;
         }
 
-        private static bool NoDataFields(string[] fields) => fields.Length < 5;
+        private bool NoDataFields(string[] fields) => fields.Length < 5;
 
-        private static Dictionary<int, int> MatchYearsWithIndex()
+        private Dictionary<int, int> MatchYearsWithIndex()
         {
             var years = new Dictionary<int, int>();
 
@@ -60,7 +60,7 @@
             return years;
         }
 
-        private static bool MustSkipLine(string line) => line.StartsWith("\"Data Source")
+        private bool MustSkipLine(string line) => line.StartsWith("\"Data Source")
             || line.StartsWith("\"Last Updated")
             || line.StartsWith("\"Country Name")
             || string.IsNullOrEmpty(line);

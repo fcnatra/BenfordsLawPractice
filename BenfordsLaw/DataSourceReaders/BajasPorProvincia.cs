@@ -1,11 +1,11 @@
 ﻿namespace BenfordsLaw.DataSourceReaders
 {
-    public class BajasPorProvincia
+    public class BajasPorProvincia : DataSourceReaderBase, IDataSourceReader
     {
-        public static List<double> ReadNumbers()
+        public List<double> ReadNumbers()
         {
             Console.WriteLine("INE - Bajas por provincia");
-            var reader = new StreamReader(".\\DataSourceFiles\\INE Bajas por Provincia.csv");
+            var reader = new StreamReader($"{base.SourceFolder}INE Bajas por Provincia.csv");
 
             string fileContent = reader.ReadToEnd();
             string[] linesInFile = fileContent.Split("\r\n");
@@ -34,7 +34,7 @@
             return numbers.ToList();
         }
 
-        private static bool MustSkipLine(string line) => string.IsNullOrEmpty(line)
+        private bool MustSkipLine(string line) => string.IsNullOrEmpty(line)
             || line.StartsWith("Provincia");
 
         private class Baja

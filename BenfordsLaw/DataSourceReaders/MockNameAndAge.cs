@@ -1,11 +1,11 @@
 ﻿namespace BenfordsLaw.DataSourceReaders
 {
-    public class MockNameAndAge
+    public class MockNameAndAge : DataSourceReaderBase, IDataSourceReader
     {
-        public static List<double> ReadNumbers()
+        public List<double> ReadNumbers()
         {
             Console.WriteLine("Mock Name and Age.mockaroo.com");
-            var reader = new StreamReader(".\\DataSourceFiles\\Mock Name and Age.mockaroo.com.csv");
+            var reader = new StreamReader($"{base.SourceFolder}Mock Name and Age.mockaroo.com.csv");
 
             string fileContent = reader.ReadToEnd();
             string[] linesInFile = fileContent.Split("\n");
@@ -33,10 +33,10 @@
             return numbers.ToList();
         }
 
-        private static bool NoDataFields(string[] fields) => fields.Length < 2
+        private bool NoDataFields(string[] fields) => fields.Length < 2
             || string.IsNullOrEmpty(string.Join("",fields));
 
-        private static bool MustSkipLine(string line) => string.IsNullOrEmpty(line)
+        private bool MustSkipLine(string line) => string.IsNullOrEmpty(line)
             || line.StartsWith("full");
 
         private class PersonData

@@ -1,11 +1,11 @@
 ﻿namespace BenfordsLaw.DataSourceReaders
 {
-    public class FakePinNumbers
+    public class FakePinNumbers : DataSourceReaderBase, IDataSourceReader
     {
-        public static List<double> ReadNumbers()
+        public List<double> ReadNumbers()
         {
             Console.WriteLine("FAKE PIN Numbers");
-            var reader = new StreamReader(".\\DataSourceFiles\\FAKE PinNumbers.csv");
+            var reader = new StreamReader($"{base.SourceFolder}FAKE PinNumbers.csv");
 
             string fileContent = reader.ReadToEnd();
             string[] linesInFile = fileContent.Split("\r\n");
@@ -22,6 +22,6 @@
             return numbers;
         }
 
-        private static bool MustSkipLine(string line) => line.StartsWith("PIN") || string.IsNullOrEmpty(line);
+        private bool MustSkipLine(string line) => line.StartsWith("PIN") || string.IsNullOrEmpty(line);
     }
 }
