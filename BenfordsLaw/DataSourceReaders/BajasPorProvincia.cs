@@ -34,7 +34,8 @@
             return numbers.ToList();
         }
 
-        private static bool MustSkipLine(string line) => line.StartsWith("\"Data Source") || line.StartsWith("\"Last Updated") || string.IsNullOrEmpty(line);
+        private static bool MustSkipLine(string line) => string.IsNullOrEmpty(line)
+            || line.StartsWith("Provincia");
 
         private class Baja
         {

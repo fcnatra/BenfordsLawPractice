@@ -16,11 +16,12 @@ Console.WriteLine(" 9   4,6 % ");
 
 Console.WriteLine("\nDatasource analysis result");
 
-//List<double> numbers = BajasPorProvincia.ReadNumbers();
-//List<double> numbers = FakePinNumbers.ReadNumbers();
-//List<double> numbers = BirthRate.ReadNumbers();
-//List<double> numbers = LiveMetrics.ReadNumbers();
-List<double> numbers = MockNameAndAge.ReadNumbers();
+List<double> numbers;
+numbers = BajasPorProvincia.ReadNumbers();
+numbers = FakePinNumbers.ReadNumbers();
+numbers = BirthRate.ReadNumbers();
+numbers = LiveMetrics.ReadNumbers();
+numbers = MockNameAndAge.ReadNumbers();
 
 List<char>? firstDigitInNumbers = numbers.Select(x => x.ToString()[0]).ToList();
 
