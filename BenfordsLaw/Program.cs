@@ -1,9 +1,12 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using BenfordsLaw;
+using BenfordsLaw.Domain;
 
 internal class Program
 {
+    internal static BenfordsLawLogic _lawCalculator = new BenfordsLawLogic();
+
     private static void Main(string[] args)
     {
         PrintBenfordsLawPercentages();
@@ -12,16 +15,15 @@ internal class Program
 
         List<double> numbers;
         //numbers = ReaderFactory.GetReader(ReaderType.BajasPorProvincia).ReadNumbers();
-        //numbers = ReaderFactory.GetReader(ReaderType.FakePinNumbers).ReadNumbers();
-        //numbers = ReaderFactory.GetReader(ReaderType.BirthRate).ReadNumbers();
-        //numbers = ReaderFactory.GetReader(ReaderType.LiveMetrics).ReadNumbers();
-        //numbers = ReaderFactory.GetReader(ReaderType.FakeNameAndAges).ReadNumbers();
         //PrintPercentages(numbers);
 
         foreach (var reader in ReaderFactory.GetAllReaders())
         {
-            numbers = reader.ReadNumbers();
             Console.WriteLine(reader.GetType().Name);
+            numbers = reader.ReadNumbers();
+
+            List<NumberOfAppereance> calculatedPercentages = _lawCalculator.CalculatePercentages(numbers);
+
             PrintPercentages(numbers);
         }
     }
@@ -29,15 +31,10 @@ internal class Program
     private static void PrintBenfordsLawPercentages()
     {
         Console.WriteLine("Benford's Law");
-        Console.WriteLine(" 1  30,1 %");
-        Console.WriteLine(" 2  17,6 %");
-        Console.WriteLine(" 3  12,5 %");
-        Console.WriteLine(" 4   9,7 % ");
-        Console.WriteLine(" 5   7,9 % ");
-        Console.WriteLine(" 6   6,7 % ");
-        Console.WriteLine(" 7   5,8 % ");
-        Console.WriteLine(" 8   5,1 % ");
-        Console.WriteLine(" 9   4,6 % ");
+        Console.WriteLine($"{"Digit",5} {"appereance %",12}");
+        var lawNumbers = _lawCalculator.LawNumbers();
+        foreach (var number in lawNumbers)
+            Console.WriteLine($"{number.Digit,5} {number.PercentageOfAppereances,10} %");
     }
 
     private static void PrintPercentages(List<double> numbers)
