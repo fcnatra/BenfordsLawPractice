@@ -1,14 +1,16 @@
-﻿namespace BenfordsLaw.DataSourceReaders
+﻿using BenfordsLaw.Interfaces;
+
+namespace BenfordsLaw.InputPorts
 {
-    public class BajasPorProvincia : DataSourceReaderBase, IDataSourceReader
+    public class BajasPorProvincia : IDataSourceReader
     {
+        public IFileReader? FileReaderAdapter { get; set; }
+
         public List<double> ReadNumbers()
         {
             Console.WriteLine("INE - Bajas por provincia");
-            var reader = new StreamReader($"{base.SourceFolder}INE Bajas por Provincia.csv");
 
-            string fileContent = reader.ReadToEnd();
-            string[] linesInFile = fileContent.Split("\r\n");
+            string[] linesInFile = FileReaderAdapter?.ReadContent() ?? Array.Empty<string>();
 
             var dataInFile = new List<Baja>();
             foreach (string line in linesInFile)
@@ -28,13 +30,13 @@
             }
 
             var numbers = dataInFile
-                .Where(x => x.Nacionality.Contains("ESPAÑ") && x.BirthContinent.Contains("UE"))
+                .Where(x => (x.Nacionality?.Contains("ESPAÑ") ?? false) && (x.BirthContinent?.Contains("UE") ?? false))
                 .Select(x => x.Value);
 
             return numbers.ToList();
         }
 
-        private bool MustSkipLine(string line) => string.IsNullOrEmpty(line)
+        private static bool MustSkipLine(string line) => string.IsNullOrEmpty(line)
             || line.StartsWith("Provincia");
 
         private class Baja

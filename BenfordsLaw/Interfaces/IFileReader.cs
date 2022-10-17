@@ -1,4 +1,4 @@
-﻿namespace BenfordsLaw.Adapters
+﻿namespace BenfordsLaw.Interfaces
 {
     public interface IFileReader
     {

@@ -1,14 +1,16 @@
-﻿namespace BenfordsLaw.DataSourceReaders
+﻿using BenfordsLaw.Interfaces;
+
+namespace BenfordsLaw.InputPorts
 {
-    public class MockNameAndAge : DataSourceReaderBase, IDataSourceReader
+    public class MockNameAndAge : IDataSourceReader
     {
+        public IFileReader? FileReaderAdapter { get; set; }
+
         public List<double> ReadNumbers()
         {
             Console.WriteLine("Mock Name and Age.mockaroo.com");
-            var reader = new StreamReader($"{base.SourceFolder}Mock Name and Age.mockaroo.com.csv");
 
-            string fileContent = reader.ReadToEnd();
-            string[] linesInFile = fileContent.Split("\n");
+            string[] linesInFile = FileReaderAdapter?.ReadContent() ?? Array.Empty<string>();
 
             var dataInFile = new List<PersonData>();
             foreach (string line in linesInFile)
@@ -33,10 +35,10 @@
             return numbers.ToList();
         }
 
-        private bool NoDataFields(string[] fields) => fields.Length < 2
+        private static bool NoDataFields(string[] fields) => fields.Length < 2
             || string.IsNullOrEmpty(string.Join("",fields));
 
-        private bool MustSkipLine(string line) => string.IsNullOrEmpty(line)
+        private static bool MustSkipLine(string line) => string.IsNullOrEmpty(line)
             || line.StartsWith("full");
 
         private class PersonData

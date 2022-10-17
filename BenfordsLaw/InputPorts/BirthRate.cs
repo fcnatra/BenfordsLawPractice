@@ -1,14 +1,16 @@
-﻿namespace BenfordsLaw.DataSourceReaders
+﻿using BenfordsLaw.Interfaces;
+
+namespace BenfordsLaw.InputPorts
 {
-    public class BirthRate : DataSourceReaderBase, IDataSourceReader
+    public class BirthRate : IDataSourceReader
     {
+        public IFileReader? FileReaderAdapter { get; set; }
+
         public List<double> ReadNumbers()
         {
             Console.WriteLine("Data WorldBank - Birth rate per mil");
-            var reader = new StreamReader($"{base.SourceFolder}BirthRatePerMil.Data.WorldBank.csv");
 
-            string fileContent = reader.ReadToEnd();
-            string[] linesInFile = fileContent.Split("\r\n");
+            string[] linesInFile = FileReaderAdapter?.ReadContent() ?? Array.Empty<string>();
 
             Dictionary<int, int> year = MatchYearsWithIndex();
 
@@ -39,7 +41,7 @@
             return numbers.ToList();
         }
 
-        private double TryGetField_OrZero(string[] fields, int fieldIndex)
+        private static double TryGetField_OrZero(string[] fields, int fieldIndex)
         {
             double result = 0;
             if (fields.Length > fieldIndex)
@@ -48,9 +50,9 @@
             return result;
         }
 
-        private bool NoDataFields(string[] fields) => fields.Length < 5;
+        private static bool NoDataFields(string[] fields) => fields.Length < 5;
 
-        private Dictionary<int, int> MatchYearsWithIndex()
+        private static Dictionary<int, int> MatchYearsWithIndex()
         {
             var years = new Dictionary<int, int>();
 
@@ -60,7 +62,7 @@
             return years;
         }
 
-        private bool MustSkipLine(string line) => line.StartsWith("\"Data Source")
+        private static bool MustSkipLine(string line) => line.StartsWith("\"Data Source")
             || line.StartsWith("\"Last Updated")
             || line.StartsWith("\"Country Name")
             || string.IsNullOrEmpty(line);

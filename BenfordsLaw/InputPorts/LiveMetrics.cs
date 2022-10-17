@@ -1,14 +1,16 @@
-﻿namespace BenfordsLaw.DataSourceReaders
+﻿using BenfordsLaw.Interfaces;
+
+namespace BenfordsLaw.InputPorts
 {
-    public class LiveMetrics : DataSourceReaderBase, IDataSourceReader
+    public class LiveMetrics : IDataSourceReader
     {
+        public IFileReader? FileReaderAdapter { get; set; }
+
         public List<double> ReadNumbers()
         {
             Console.WriteLine("Datos.Gob.Es - LiveMetrics");
-            var reader = new StreamReader($"{base.SourceFolder}LiveMetrics.produccionanualacorganizacion.datos.gob.es.csv");
 
-            string fileContent = reader.ReadToEnd();
-            string[] linesInFile = fileContent.Split("\r\n");
+            string[] linesInFile = FileReaderAdapter?.ReadContent() ?? Array.Empty<string>();
 
             var dataInFile = new List<LiveMetric>();
             foreach (string line in linesInFile)
@@ -37,10 +39,10 @@
             return numbers.ToList();
         }
 
-        private bool NoDataFields(string[] fields) => fields.Length < 5
+        private static bool NoDataFields(string[] fields) => fields.Length < 5
             || string.IsNullOrEmpty(string.Join("",fields));
 
-        private bool MustSkipLine(string line) => string.IsNullOrEmpty(line)
+        private static bool MustSkipLine(string line) => string.IsNullOrEmpty(line)
             || (line[0] < '0' || line[0] > '9');
 
         private class LiveMetric
