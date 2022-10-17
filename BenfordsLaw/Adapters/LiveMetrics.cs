@@ -1,17 +1,22 @@
-﻿using BenfordsLaw.Interfaces;
+﻿using BenfordsLaw.Ports;
 
-namespace BenfordsLaw.InputPorts
+namespace BenfordsLaw.Adapters
 {
-    public class LiveMetrics : IDataSourceReader
+    public class LiveMetrics : AdapterBase, IDataSourceReader
     {
-        public IFileReader? FileReaderAdapter { get; set; }
-
         public List<double> ReadNumbers()
         {
-            Console.WriteLine("Datos.Gob.Es - LiveMetrics");
+            string[] linesInFile = base.LoadContentFrom("LiveMetrics.produccionanualacorganizacion.datos.gob.es.csv");
 
-            string[] linesInFile = FileReaderAdapter?.ReadContent() ?? Array.Empty<string>();
+            List<LiveMetric> liveMetrics = ReadInformation(linesInFile);
 
+            var numbers = liveMetrics.Select(x => (double)x.WebOfScienceDocs);
+
+            return numbers.ToList();
+        }
+
+        private static List<LiveMetric> ReadInformation(string[] linesInFile)
+        {
             var dataInFile = new List<LiveMetric>();
             foreach (string line in linesInFile)
             {
@@ -34,18 +39,16 @@ namespace BenfordsLaw.InputPorts
                 });
             }
 
-            var numbers = dataInFile.Select(x => (double)x.WebOfScienceDocs);
-
-            return numbers.ToList();
+            return dataInFile;
         }
 
         private static bool NoDataFields(string[] fields) => fields.Length < 5
-            || string.IsNullOrEmpty(string.Join("",fields));
+            || string.IsNullOrEmpty(string.Join("", fields));
 
         private static bool MustSkipLine(string line) => string.IsNullOrEmpty(line)
-            || (line[0] < '0' || line[0] > '9');
+            || line[0] < '0' || line[0] > '9';
 
-        private class LiveMetric
+        private struct LiveMetric
         {
             public string? Name;
             public int WebOfScienceDocs;

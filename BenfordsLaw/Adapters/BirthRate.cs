@@ -1,20 +1,25 @@
-﻿using BenfordsLaw.Interfaces;
+﻿using BenfordsLaw.Ports;
 
-namespace BenfordsLaw.InputPorts
+namespace BenfordsLaw.Adapters
 {
-    public class BirthRate : IDataSourceReader
+    public class BirthRate : AdapterBase, IDataSourceReader
     {
-        public IFileReader? FileReaderAdapter { get; set; }
-
         public List<double> ReadNumbers()
         {
-            Console.WriteLine("Data WorldBank - Birth rate per mil");
+            string[] linesInFile = base.LoadContentFrom("BirthRatePerMil.Data.WorldBank.csv");
 
-            string[] linesInFile = FileReaderAdapter?.ReadContent() ?? Array.Empty<string>();
+            List<BirthInfo> dataInFile = ReadInformation(linesInFile);
 
+            var numbers = dataInFile.Select(x => x.BirthRate);
+
+            return numbers.ToList();
+        }
+
+        private static List<BirthInfo> ReadInformation(string[] linesInFile)
+        {
             Dictionary<int, int> year = MatchYearsWithIndex();
 
-            var dataInFile = new List<Baja>();
+            var births = new List<BirthInfo>();
             foreach (string line in linesInFile)
             {
                 if (MustSkipLine(line))
@@ -26,7 +31,7 @@ namespace BenfordsLaw.InputPorts
                 if (NoDataFields(fields))
                     continue;
 
-                dataInFile.Add(new Baja
+                births.Add(new BirthInfo
                 {
                     CountryName = fields[0].ToUpper(),
                     CountryCode = fields[1].ToUpper(),
@@ -36,9 +41,7 @@ namespace BenfordsLaw.InputPorts
                 });
             }
 
-            var numbers = dataInFile.Select(x => x.BirthRate);
-
-            return numbers.ToList();
+            return births;
         }
 
         private static double TryGetField_OrZero(string[] fields, int fieldIndex)
@@ -67,7 +70,7 @@ namespace BenfordsLaw.InputPorts
             || line.StartsWith("\"Country Name")
             || string.IsNullOrEmpty(line);
 
-        private class Baja
+        private struct BirthInfo
         {
             public string? CountryName;
             public string? CountryCode;

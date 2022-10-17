@@ -1,8 +1,7 @@
-﻿namespace BenfordsLaw.Interfaces
+﻿namespace BenfordsLaw.Ports
 {
     public interface IDataSourceReader
     {
-        IFileReader? FileReaderAdapter { get; set; }
         List<double> ReadNumbers();
     }
 }

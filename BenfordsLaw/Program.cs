@@ -21,6 +21,7 @@ internal class Program
         foreach (var reader in ReaderFactory.GetAllReaders())
         {
             numbers = reader.ReadNumbers();
+            Console.WriteLine(reader.GetType().Name);
             PrintPercentages(numbers);
         }
     }

@@ -1,17 +1,20 @@
-﻿using BenfordsLaw.Interfaces;
+﻿using BenfordsLaw.Ports;
 
-namespace BenfordsLaw.InputPorts
+namespace BenfordsLaw.Adapters
 {
-    public class FakePinNumbers : IDataSourceReader
+    public class FakePinNumbers : AdapterBase, IDataSourceReader
     {
-        public IFileReader? FileReaderAdapter { get; set; }
-
         public List<double> ReadNumbers()
         {
-            Console.WriteLine("FAKE PIN Numbers");
+            string[] linesInFile = base.LoadContentFrom("FAKE PinNumbers.csv");
 
-            string[] linesInFile = FileReaderAdapter?.ReadContent() ?? Array.Empty<string>();
+            List<double> numbers = ReadInformation(linesInFile);
 
+            return numbers;
+        }
+
+        private static List<double> ReadInformation(string[] linesInFile)
+        {
             var numbers = new List<double>();
             foreach (string line in linesInFile)
             {

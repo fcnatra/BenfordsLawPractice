@@ -1,18 +1,23 @@
-﻿using BenfordsLaw.Interfaces;
+﻿using BenfordsLaw.Ports;
 
-namespace BenfordsLaw.InputPorts
+namespace BenfordsLaw.Adapters
 {
-    public class MockNameAndAge : IDataSourceReader
+    public class MockNameAndAge : AdapterBase, IDataSourceReader
     {
-        public IFileReader? FileReaderAdapter { get; set; }
-
         public List<double> ReadNumbers()
         {
-            Console.WriteLine("Mock Name and Age.mockaroo.com");
+            string[] linesInFile = base.LoadContentFrom("Mock Name and Age.mockaroo.com.csv");
 
-            string[] linesInFile = FileReaderAdapter?.ReadContent() ?? Array.Empty<string>();
+            List<PersonInfo> personsInfo = ReadInformation(linesInFile);
 
-            var dataInFile = new List<PersonData>();
+            var numbers = personsInfo.Select(x => (double)x.Age);
+
+            return numbers.ToList();
+        }
+
+        private static List<PersonInfo> ReadInformation(string[] linesInFile)
+        {
+            var dataInFile = new List<PersonInfo>();
             foreach (string line in linesInFile)
             {
                 if (MustSkipLine(line))
@@ -23,25 +28,23 @@ namespace BenfordsLaw.InputPorts
                 if (NoDataFields(fields))
                     continue;
 
-                dataInFile.Add(new PersonData
+                dataInFile.Add(new PersonInfo
                 {
                     Name = fields[0].ToUpper(),
                     Age = int.Parse(fields[1])
                 });
             }
 
-            var numbers = dataInFile.Select(x => (double)x.Age);
-
-            return numbers.ToList();
+            return dataInFile;
         }
 
         private static bool NoDataFields(string[] fields) => fields.Length < 2
-            || string.IsNullOrEmpty(string.Join("",fields));
+            || string.IsNullOrEmpty(string.Join("", fields));
 
         private static bool MustSkipLine(string line) => string.IsNullOrEmpty(line)
             || line.StartsWith("full");
 
-        private class PersonData
+        private class PersonInfo
         {
             public string? Name;
             public int Age;

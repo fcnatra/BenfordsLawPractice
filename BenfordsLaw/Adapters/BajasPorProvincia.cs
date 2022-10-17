@@ -1,17 +1,30 @@
-﻿using BenfordsLaw.Interfaces;
+﻿using BenfordsLaw.Ports;
 
-namespace BenfordsLaw.InputPorts
+namespace BenfordsLaw.Adapters
 {
-    public class BajasPorProvincia : IDataSourceReader
+    public class BajasPorProvincia : AdapterBase, IDataSourceReader
     {
-        public IFileReader? FileReaderAdapter { get; set; }
-
         public List<double> ReadNumbers()
         {
-            Console.WriteLine("INE - Bajas por provincia");
+            string[] linesInFile = base.LoadContentFrom("INE Bajas por Provincia.csv");
 
-            string[] linesInFile = FileReaderAdapter?.ReadContent() ?? Array.Empty<string>();
+            List<Baja> dataInFile = ReadInformation(linesInFile);
 
+            List<double> numbers = GetNumbersFromAColumn(dataInFile);
+
+            return numbers;
+        }
+
+        private static List<double> GetNumbersFromAColumn(List<Baja> dataInFile)
+        {
+            return dataInFile
+                .Where(x => (x.Nacionality?.Contains("ESPAÑ") ?? false) && (x.BirthContinent?.Contains("UE") ?? false))
+                .Select(x => x.Value)
+                .ToList();
+        }
+
+        private static List<Baja> ReadInformation(string[] linesInFile)
+        {
             var dataInFile = new List<Baja>();
             foreach (string line in linesInFile)
             {
@@ -29,17 +42,13 @@ namespace BenfordsLaw.InputPorts
                 });
             }
 
-            var numbers = dataInFile
-                .Where(x => (x.Nacionality?.Contains("ESPAÑ") ?? false) && (x.BirthContinent?.Contains("UE") ?? false))
-                .Select(x => x.Value);
-
-            return numbers.ToList();
+            return dataInFile;
         }
 
         private static bool MustSkipLine(string line) => string.IsNullOrEmpty(line)
             || line.StartsWith("Provincia");
 
-        private class Baja
+        private struct Baja
         {
             public string? Province;
             public string? Nacionality;
