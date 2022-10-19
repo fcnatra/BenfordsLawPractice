@@ -1,7 +1,7 @@
 ﻿using BenfordsLaw.Adapters;
 using BenfordsLaw.Ports;
 
-namespace BenfordsLaw
+namespace BenfordsLaw.Domain
 {
     public enum ReaderType
     {
@@ -12,7 +12,7 @@ namespace BenfordsLaw
         FakeNameAndAges
     }
 
-    public class ReaderFactory
+    public class DataSourceFactory
     {
         public static List<IDataSourceReader> GetAllReaders()
         {
